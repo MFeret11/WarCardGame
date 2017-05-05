@@ -1,0 +1,5 @@
+/Users/mattferet/Projects/WarCardGame/WarCardGame/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/Users/mattferet/Projects/WarCardGame/WarCardGame/bin/Debug/WarCardGame.exe.mdb
+/Users/mattferet/Projects/WarCardGame/WarCardGame/bin/Debug/WarCardGame.exe
+/Users/mattferet/Projects/WarCardGame/WarCardGame/obj/x86/Debug/WarCardGame.exe
+/Users/mattferet/Projects/WarCardGame/WarCardGame/obj/x86/Debug/WarCardGame.exe.mdb
