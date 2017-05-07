@@ -6,10 +6,20 @@ using System.Linq;
 namespace WarCardGame
 {
 
-	public class WarGame//52 card deck. 8 cards each player 
-		//Output the hands of both players, the evaluation of both hands, and the number of cards remaining in the deck.
+	public class WarGame
+	/* Rules: 52 normal card deck. each player starts with 26 cards, face down. 
+	 * In unison, players flip cards to reveal the top card 1 at a time.
+	 * If player A's card has a higher rank than player B's card, (2-A) player A's 
+	 * gets both cards and places them at the bottom of their hand.
+	 * If the cards are the same value both players place 3 cards face-down and 
+	 * flip and compare a fourth card. Whomever has the greater ranking card between 
+	 * the two wins all the cards in that round. Game ends when 1 player runs out of cards.
+	 * thus, other player wins.
+	 * Written by: Mattthew Feret
+	 * */
+		
 	{
-		public const int NUM_OF_CARDS = 52;
+		private const int NUM_OF_CARDS = 52;
 		private const int MAXROUNDS = 500;
 
 		static WarGame ()
@@ -30,35 +40,44 @@ namespace WarCardGame
 				Card c = newDeck.DealOne ();
 				player2Hand.Add (c);
 			}
-
-
-
+				
 			Console.WriteLine ("Initial card count: ");
 			Console.WriteLine ("player 1 has " + player1Hand.Count + " Cards");
 			Console.WriteLine ("player 2 has " + player2Hand.Count + " Cards");
-//			Console.WriteLine ("Player1Hand: ");
-//			foreach(Card c in player1Hand){
-//				Console.WriteLine (c.ToString());
-//			}
 
 			//compare cards
 			const int drawForTie = 4;
 			int tie = 1;
+			string input;
 			for (int i = 0; i < MAXROUNDS; i++) {
 				//either player is out of cards
 				if (!player1Hand.Any () || !player2Hand.Any ()) {
 					Console.WriteLine ("Game Over!");
 					if (!player1Hand.Any ()) {
 						Console.WriteLine ("Player 2 Wins!");
-						foreach (Card c in player2Hand) {
-							Console.Write (c.ToString () + " ");
+						Console.WriteLine ("Press Y to see final winning hand: ");
+						input = Console.ReadLine ().ToUpper ();
+						if (input == "Y") {
+							Console.WriteLine ("------------------");
+							foreach (Card c in player2Hand) {
+								Console.WriteLine (c.ToString () + " ");
+							}
 						}
+						Console.WriteLine ("------------------");
+						Console.WriteLine ("Thanks!");
 					}
 					if (!player2Hand.Any ()) {
 						Console.WriteLine ("Player 1 Wins!");
-						foreach (Card c in player1Hand) {
-							Console.Write (c.ToString () + " ");
+						Console.WriteLine ("Press y to see final winning hand: ");
+						input = Console.ReadLine ().ToUpper ();
+						if (input == "Y") {
+							Console.WriteLine ("------------------");
+							foreach (Card c in player1Hand) {
+								Console.WriteLine (c.ToString () + " ");
+							}
 						}
+						Console.WriteLine ("------------------");
+						Console.WriteLine ("Thanks!");
 					}
 					return;
 				} else { //else both players have some cards
@@ -108,7 +127,13 @@ namespace WarCardGame
 									//Cards are not equal. Compare cards in 4th, then 8th, then 12th... position
 									if (compareCards (player1Hand [((i + (drawForTie * tie)) % player1Hand.Count)], player2Hand [((i + (drawForTie * tie)) % player2Hand.Count)]) == 1) { //player1 wins
 										//player1 wins a bunch of cards & player2 loses a bunch
-										Console.WriteLine ("Player 1 wins tiebreaker.");
+										if(tie == 1)
+											Console.WriteLine ("Player 1 wins tiebreaker!");
+										else if( tie == 2)
+											Console.WriteLine ("Player 1 wins double - tiebreaker!");
+										else if(tie >= 3)
+											Console.WriteLine ("Player 1 wins triple - tiebreaker!");
+										
 										Console.WriteLine ("Recieves " + (drawForTie * tie + 1) + " Cards");
 									
 										for (int k = 0; k <= drawForTie * tie; k++) {
@@ -123,8 +148,14 @@ namespace WarCardGame
 
 									} else {
 										//player2 wins a bunch and player2 loses a bunch
-										Console.WriteLine ("Player 2 wins tiebreaker.");
-										Console.WriteLine ("Recieves " + (drawForTie * tie + 1) + " Cards");
+										if(tie == 1)
+											Console.WriteLine ("Player 2 wins tiebreaker!");
+										else if( tie == 2)
+											Console.WriteLine ("Player 2 wins double - tiebreaker!");
+										else if(tie >= 3)
+											Console.WriteLine ("Player 2 wins triple (or higher!) tiebreaker!");
+										
+										Console.WriteLine ("Recieves " + (drawForTie * tie + 1) + " Cards: ");
 										Console.WriteLine ("Player 1 Count: " + player1Hand.Count);
 										Console.WriteLine ("Player 2 Count: " + player2Hand.Count);
 
@@ -137,6 +168,7 @@ namespace WarCardGame
 										Console.WriteLine ("Player 2 Count: " + player2Hand.Count);
 									}
 								} else {	//Cards are equal so we must do another tie-breaker
+									Console.WriteLine("tie-breaker #" +(tie+1)+"!");
 									tie++;
 								}
 							}//reset tie
@@ -148,11 +180,6 @@ namespace WarCardGame
 			Console.WriteLine ("----------------------");
 			Console.WriteLine ("----------------------");
 			Console.WriteLine ("Result: ");
-//			Console.WriteLine ("Player1Hand: ");
-//			foreach(Card c in player1Hand){
-//				Console.WriteLine (c.ToString());
-//			}
-//	
 
 			Console.WriteLine ("player 1 has " + player1Hand.Count + " Cards");
 			Console.WriteLine ("player 2 has " + player2Hand.Count + " Cards");
@@ -165,7 +192,7 @@ namespace WarCardGame
 			else if (player1Hand.Count < player2Hand.Count)
 				Console.WriteLine ("Player 2 wins!");
 			else
-				Console.WriteLine ("Tie!");
+				Console.WriteLine ("Tie! -- After " + MAXROUNDS + " rounds!!!");
 		}
 
 
@@ -195,9 +222,7 @@ namespace WarCardGame
 			return newDeck;
 		}
 
-		public static void PlayGame ()
-		{
-		}
+		public static void PlayGame (){}
 	}
 }
 
