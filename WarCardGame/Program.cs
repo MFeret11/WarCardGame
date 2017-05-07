@@ -6,7 +6,9 @@ namespace WarCardGame
 	{
 		public static void Main (string[] args)
 		{
-			Console.WriteLine ("Hello World!");
+			//play games
+			WarGame.PlayGame();
+		
 		}
 	}
 }

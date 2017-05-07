@@ -38,6 +38,10 @@
     <Compile Include="Rank.cs" />
     <Compile Include="Suit.cs" />
     <Compile Include="Card.cs" />
+    <Compile Include="Deck.cs" />
+    <Compile Include="Hand.cs" />
+    <Compile Include="WarHand.cs" />
+    <Compile Include="WarGame.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
